@@ -4,6 +4,9 @@
 # Leftovers from merges
 *.orig
 
+# Venv information
+venv/
+
 # File uploads and what not
 files/avatars/*-*
 files/avatars/user/*
