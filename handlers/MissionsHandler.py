@@ -517,7 +517,8 @@ class PurchaseHintHandler(BaseHandler):
                 self.render_page(hint.box)
             else:
                 self.render_page(
-                    hint.box, info=["You cannot afford to purchase this hint."]
+                    # hint.box, info=["You cannot afford to purchase this hint."]
+                    hint.box, info=["You do not DARE to afford to purchase this hint."]
                 )
         else:
             self.render("public/404.html")
