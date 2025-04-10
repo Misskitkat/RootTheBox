@@ -502,11 +502,11 @@ class PurchaseHintHandler(BaseHandler):
                 and Penalty.by_count(flag, user.team) >= options.max_flag_attempts
             ):
                 self.render_page(
-                    hint.box, info=["You can no longer purchase this hint."]
+                    hint.box, info=[f"You can no longer purchase this hint."]
                 )
             elif not hint.is_unlocked:
                 self.render_page(
-                    hint.box, info=["You cannot access this hint yet."]
+                    hint.box, info=[f"This hint is locked. It will unlock at {hint.unlock_time}"]
                 )
             elif hint.price <= user.team.money:
                 logging.info(
