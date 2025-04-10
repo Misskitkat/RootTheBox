@@ -129,6 +129,7 @@ class Hint(DatabaseObject):
         else:
             self._unlock_time = None
 
+    @property
     def is_unlocked(self):
         return False
         # unlocked = self._unlock_time

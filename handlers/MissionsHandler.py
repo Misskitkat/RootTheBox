@@ -504,7 +504,7 @@ class PurchaseHintHandler(BaseHandler):
                 self.render_page(
                     hint.box, info=["You can no longer purchase this hint."]
                 )
-            elif True:
+            elif not hint.is_unlocked:
                 self.render_page(
                     hint.box, info=["You cannot access this hint yet."]
                 )
