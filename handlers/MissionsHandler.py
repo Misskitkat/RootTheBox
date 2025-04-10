@@ -504,6 +504,10 @@ class PurchaseHintHandler(BaseHandler):
                 self.render_page(
                     hint.box, info=["You can no longer purchase this hint."]
                 )
+            elif !hint.is_unlocked:
+                self.render_page(
+                    hint.box, info=["You cannot access this hint yet."]
+                )
             elif hint.price <= user.team.money:
                 logging.info(
                     "%s (%s) purchased a hint for $%d on %s"
