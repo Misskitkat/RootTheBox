@@ -115,6 +115,7 @@ class Hint(DatabaseObject):
         if not 0 < len(value) < 4097:
             raise ValidationError("Hint description must be 1 - 4096 characters")
         self._description = str(value)
+
     @property
     def unlock_time(self):
         if self._unlock_time is None or self._unlock_time == "":
@@ -124,6 +125,7 @@ class Hint(DatabaseObject):
     @unlock_time.setter
     def unlock_time(self, time):
         if time and len(time) > 0:
+            print(time)
             self._unlock_time = datetime.strptime(time, "%Y-%m-%dT%H:%M")
         else:
             self._unlock_time = None
