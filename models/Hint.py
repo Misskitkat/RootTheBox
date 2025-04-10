@@ -131,11 +131,10 @@ class Hint(DatabaseObject):
 
     @property
     def is_unlocked(self):
+        unlocked = self._unlock_time
+        if unlocked and unlocked != "":
+            return datetime.now() > unlocked
         return False
-        # unlocked = self._unlock_time
-        # if unlocked and unlocked != "":
-        #     return datetime.now() > unlocked
-        # return False
         
     def to_xml(self, parent):
         hint_elem = ET.SubElement(parent, "hint")
