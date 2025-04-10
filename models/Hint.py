@@ -130,7 +130,7 @@ class Hint(DatabaseObject):
             self._unlock_time = None
 
     def is_unlocked(self):
-        return false
+        return False
         # unlocked = self._unlock_time
         # if unlocked and unlocked != "":
         #     return datetime.now() > unlocked
