@@ -330,6 +330,7 @@ class AdminCreateHandler(BaseHandler):
                 hint.flag_id = flag.id
             else:
                 hint.flag_id = None
+            hint.unlock_time = self.get_argument("hint-unlock", "")
             self.dbsession.add(hint)
             self.dbsession.commit()
             self.redirect("/admin/view/game_objects#%s" % box.uuid)

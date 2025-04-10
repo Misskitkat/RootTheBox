@@ -23,9 +23,10 @@ Created on Aug 11, 2013
 import xml.etree.cElementTree as ET
 from builtins import str
 from uuid import uuid4
+from datetime import datetime
 
 from sqlalchemy import Column, ForeignKey
-from sqlalchemy.types import Integer, String, Unicode
+from sqlalchemy.types import Integer, String, Unicode, DateTime
 
 from libs.ValidationError import ValidationError
 from models import dbsession
@@ -47,6 +48,7 @@ class Hint(DatabaseObject):
     flag_id = Column(Integer, ForeignKey("flag.id"), nullable=True)
     _price = Column(Integer, nullable=False)
     _description = Column(Unicode(4096), nullable=False)
+    _unlock_time = Column(DateTime, default=None, nullable=True)
 
     @classmethod
     def all(cls):
@@ -113,7 +115,26 @@ class Hint(DatabaseObject):
         if not 0 < len(value) < 4097:
             raise ValidationError("Hint description must be 1 - 4096 characters")
         self._description = str(value)
+    @property
+    def unlock_time(self):
+        if self._unlock_time is None or self._unlock_time == "":
+            return ""
+        return self._unlock_time.isoformat()
 
+    @unlock_time.setter
+    def unlock_time(self, expire):
+        if unlock_time and len(unlock_time) > 0:
+            unlock_time = datetime.strptime(unlock_time, "%Y-%m-%dT%H:%M")
+            self._unlock_time = unlock_time.isoformat()
+        else:
+            self._unlock_time = None
+
+    def is_unlocked(self):
+        unlocked = self._unlock_time
+        if unlocked and unlocked != "":
+            return datetime.now() > unlocked
+        return False
+        
     def to_xml(self, parent):
         hint_elem = ET.SubElement(parent, "hint")
         ET.SubElement(hint_elem, "price").text = str(self.price)
