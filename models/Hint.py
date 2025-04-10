@@ -122,9 +122,9 @@ class Hint(DatabaseObject):
         return self._unlock_time.isoformat()
 
     @unlock_time.setter
-    def unlock_time(self, expire):
-        if unlock_time and len(unlock_time) > 0:
-            unlock_time = datetime.strptime(unlock_time, "%Y-%m-%dT%H:%M")
+    def unlock_time(self, time):
+        if time and len(time) > 0:
+            unlock_time = datetime.strptime(time, "%Y-%m-%dT%H:%M")
             self._unlock_time = unlock_time.isoformat()
         else:
             self._unlock_time = None
