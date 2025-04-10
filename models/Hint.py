@@ -119,13 +119,12 @@ class Hint(DatabaseObject):
     def unlock_time(self):
         if self._unlock_time is None or self._unlock_time == "":
             return ""
-        return self._unlock_time.isoformat()
+        return self._unlock_time.strftime("%Y-%m-%dT%H:%M")
 
     @unlock_time.setter
     def unlock_time(self, time):
         if time and len(time) > 0:
-            unlock_time = datetime.strptime(time, "%Y-%m-%dT%H:%M")
-            self._unlock_time = unlock_time.isoformat()
+            self._unlock_time = datetime.strptime(time, "%Y-%m-%dT%H:%M")
         else:
             self._unlock_time = None
 
