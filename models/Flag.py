@@ -82,6 +82,7 @@ class Flag(DatabaseObject):
     _order = Column(Integer, nullable=True, index=True)
     _type = Column(Unicode(16), default=False)
     _locked = Column(Boolean, default=False, nullable=False)
+    _optional = Column(Boolean, default=False, nullable=False)
 
     flag_attachments = relationship(
         "FlagAttachment",
@@ -404,6 +405,25 @@ class Flag(DatabaseObject):
             value = value.lower() in ["true", "1"]
         assert isinstance(value, bool)
         self._locked = value
+
+    @property
+    def optional(self):
+        """Determines if a flag needs to be answered."""
+        if self._optional is None:
+            return False
+        return self._optional
+
+    @optional.setter
+    def optional(self, value):
+        """Setter method for _optional"""
+        if value is None:
+            value = False
+        elif isinstance(value, int):
+            value = value == 1
+        elif isinstance(value, str):
+            value = value.lower() in ["true", "1"]
+        assert isinstance(value, bool)
+        self._optional = value
 
     def choices(self):
         # inlucdes the choice uuid - needed for editing choice

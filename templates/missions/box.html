@@ -238,7 +238,7 @@
         {% end %}
         {% if flagcount != 0 and len(box.flags) != 0 %}
             <div class="progress" style="height: 8px;; background-color: #424242;">
-                <div class="bar minibar" style="width: {{ ( flagcount /  float(len(box.flags)) ) * 100.0 }}%;" title="{{ flagcount }} / {{ len(box.flags) }}">
+                <div class="bar minibar" style="width: {{ ( flagcount /  float(len([x for x in box.flags if not x.optional])) ) * 100.0 }}%;" title="{{ flagcount }} / {{ len(box.flags) }}">
                 </div>
             </div>
         {% end %}
