@@ -23,6 +23,7 @@ Created on Mar 11, 2012
 import binascii
 import enum
 import os
+import logging
 import xml.etree.cElementTree as ET
 from collections import OrderedDict
 from os import urandom
@@ -382,9 +383,11 @@ class Box(DatabaseObject):
         return "[Bot]\nname = %s\ngarbage = %s\n" % (hex_name, self.garbage)
 
     def is_complete(self, user):
+        logging.info("Checking for Box Completion...")
         boxcomplete = True
         for boxflag in self.flags:
-            if user.team and boxflag not in user.team.flags:
+            logging.info(f"Checking boxflag: {boxflag}. Is optional? {boxflag.optional}")
+            if not boxflag.optional and user.team and boxflag not in user.team.flags:
                 boxcomplete = False
                 break
         return boxcomplete

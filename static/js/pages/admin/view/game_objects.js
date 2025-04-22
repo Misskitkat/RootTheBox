@@ -309,6 +309,24 @@ $(document).ready(function() {
         $("#case-enable-icon").addClass("fa-square-o");
         testToken();
     });
+
+    $("#optional-enable").click(function() {
+        $("#optional").val(1);
+        $("#optional-enable-icon").removeClass("fa-square-o");
+        $("#optional-enable-icon").addClass("fa-check-square-o");
+        $("#optional-disable-icon").removeClass("fa-check-square-o");
+        $("#optional-disable-icon").addClass("fa-square-o");
+        testToken();
+    });
+    $("#optional-disable").click(function() {
+        $("#optional").val(0);
+        $("#optional-disable-icon").removeClass("fa-square-o");
+        $("#optional-disable-icon").addClass("fa-check-square-o");
+        $("#optional-enable-icon").removeClass("fa-check-square-o");
+        $("#optional-enable-icon").addClass("fa-square-o");
+        testToken();
+    });
+
     $(".add-more").click(function(){
         var html = $(".copy").html();
         var siblings = $(".after-add-more").siblings(":last");
