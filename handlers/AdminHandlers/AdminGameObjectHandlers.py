@@ -317,26 +317,26 @@ class AdminCreateHandler(BaseHandler):
             self.render("admin/create/game_level.html", game_levels=game_levels, errors=[str(error)])
 
     def create_hint(self):
-    """Add hint to database"""
-    try:
-        box = Box.by_uuid(self.get_argument("box_uuid", ""))
-        if box is None:
-            raise ValidationError("Box does not exist")
-        hint = Hint(box_id=box.id)
-        hint.price = self.get_argument("price", "")
-        hint.description = self.get_argument("description", "")
-        hint.rank = self.get_argument("rank", 0)  # Add this line
-        flag = Flag.by_uuid(self.get_argument("flag_uuid", ""))
-        if flag:
-            hint.flag_id = flag.id
-        else:
-            hint.flag_id = None
-        hint.unlock_time = self.get_argument("hint-unlock", "")
-        self.dbsession.add(hint)
-        self.dbsession.commit()
-        self.redirect("/admin/view/game_objects#%s" % box.uuid)
-    except ValidationError as error:
-        self.render("admin/create/hint.html", errors=[str(error)])
+        """Add hint to database"""
+        try:
+            box = Box.by_uuid(self.get_argument("box_uuid", ""))
+            if box is None:
+                raise ValidationError("Box does not exist")
+            hint = Hint(box_id=box.id)
+            hint.price = self.get_argument("price", "")
+            hint.description = self.get_argument("description", "")
+            hint.rank = self.get_argument("rank", 0)  # Add this line
+            flag = Flag.by_uuid(self.get_argument("flag_uuid", ""))
+            if flag:
+                hint.flag_id = flag.id
+            else:
+                hint.flag_id = None
+            hint.unlock_time = self.get_argument("hint-unlock", "")
+            self.dbsession.add(hint)
+            self.dbsession.commit()
+            self.redirect("/admin/view/game_objects#%s" % box.uuid)
+        except ValidationError as error:
+            self.render("admin/create/hint.html", errors=[str(error)])
 
     def _mkflag(self, flag_type, is_file=False):
         """Creates the flag in the database"""
@@ -968,35 +968,35 @@ class AdminEditHandler(BaseHandler):
 
     def edit_hint(self):
         """Edit a hint object"""
-    try:
-        hint = Hint.by_uuid(self.get_argument("uuid", ""))
-        if hint is None:
-            raise ValidationError("Hint does not exist")
-        logging.debug("Edit hint object with uuid of %s" % hint.uuid)
-        price = self.get_argument("price", "")
-        if hint.price != price:
-            hint.price = price
-        description = self.get_argument("description", "")
-        hint.description = description
-        # Add rank handling
-        rank = self.get_argument("rank", 0)
-        if int(hint.rank) != int(rank):
-            hint.rank = rank
-        flag = Flag.by_uuid(self.get_argument("hint-flag_uuid", ""))
-        if flag:
-            flag_id = flag.id
-        else:
-            flag_id = None
-        hint.flag_id = flag_id
-        box = Box.by_id(flag.box_id)
-        hint.unlock_time = self.get_argument("hint-unlock", "")
-        self.dbsession.add(hint)
-        self.dbsession.commit()
-        self.redirect("/admin/view/game_objects#%s" % box.uuid)
-    except ValidationError as error:
-        self.render(
-            "admin/view/game_objects.html", success=None, errors=[str(error)]
-        )
+        try:
+            hint = Hint.by_uuid(self.get_argument("uuid", ""))
+            if hint is None:
+                raise ValidationError("Hint does not exist")
+            logging.debug("Edit hint object with uuid of %s" % hint.uuid)
+            price = self.get_argument("price", "")
+            if hint.price != price:
+                hint.price = price
+            description = self.get_argument("description", "")
+            hint.description = description
+            # Add rank handling
+            rank = self.get_argument("rank", 0)
+            if int(hint.rank) != int(rank):
+                hint.rank = rank
+            flag = Flag.by_uuid(self.get_argument("hint-flag_uuid", ""))
+            if flag:
+                flag_id = flag.id
+            else:
+                flag_id = None
+            hint.flag_id = flag_id
+            box = Box.by_id(flag.box_id)
+            hint.unlock_time = self.get_argument("hint-unlock", "")
+            self.dbsession.add(hint)
+            self.dbsession.commit()
+            self.redirect("/admin/view/game_objects#%s" % box.uuid)
+        except ValidationError as error:
+            self.render(
+                "admin/view/game_objects.html", success=None, errors=[str(error)]
+            )
 
     def edit_market_item(self):
         """Change a market item's price"""
@@ -1326,7 +1326,7 @@ class AdminTestTokenHandler(BaseHandler):
                 pattern = re.compile(token)
             test = pattern.match(submission) is not None
         elif flagtype == FLAG_DATETIME:
-            from dateutil.parser import parse
+            from dateutil.parser import parse # type: ignore
 
             try:
                 test = parse(token) == parse(submission)
