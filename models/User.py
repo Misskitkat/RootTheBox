@@ -42,6 +42,7 @@ from sqlalchemy.orm import backref, relationship, synonym
 from sqlalchemy.types import Boolean, DateTime, Integer, String, Unicode
 from tornado.options import options
 
+from handlers.PublicHandlers import TimeHandler
 from libs.StringCoding import encode
 from libs.ValidationError import ValidationError
 from libs.WebhookHelpers import send_user_validated_webhook
@@ -374,7 +375,7 @@ class User(DatabaseObject):
     def is_expired(self):
         expired = self._expire
         if expired and expired != "":
-            return datetime.now() > expired
+            return TimeHandler.get_datetime > expired
         return False
 
     def validate_email(self, token):

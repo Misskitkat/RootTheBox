@@ -29,7 +29,6 @@ import subprocess
 import time
 import xml.etree.cElementTree as ET
 from builtins import str
-from datetime import datetime
 from string import printable
 from tempfile import NamedTemporaryFile
 
@@ -39,6 +38,7 @@ from tornado.ioloop import PeriodicCallback
 from tornado.options import options
 
 from handlers.BaseHandlers import BaseHandler
+from handlers.PublicHandlers import TimeHandler
 from libs.ConfigHelpers import save_config
 from libs.ConsoleColors import *
 from libs.EventManager import EventManager
@@ -524,7 +524,7 @@ class AdminGitStatusHandler(BaseHandler):
 
     def current_time(self):
         """Nicely formatted current time as a string"""
-        return str(datetime.now()).split(" ")[1].split(".")[0]
+        return TimeHandler.get_current_time
 
 
 class AdminExportHandler(BaseHandler):

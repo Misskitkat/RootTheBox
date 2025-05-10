@@ -33,6 +33,7 @@ from datetime import datetime
 import nose
 from tornado.options import define, options
 
+from handlers.PublicHandlers import TimeHandler
 from libs.ConfigHelpers import save_config, save_config_image
 from libs.ConsoleColors import *
 from libs.StringCoding import set_type
@@ -41,7 +42,7 @@ from setup import __version__
 
 def current_time():
     """Nicely formatted current time as a string"""
-    return str(datetime.now()).split(" ")[1].split(".")[0]
+    return TimeHandler.get_datetime
 
 
 def start():
