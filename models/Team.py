@@ -33,7 +33,7 @@ from sqlalchemy.orm import backref, relationship
 from sqlalchemy.types import Integer, String, Unicode
 from tornado.options import options
 
-from handlers.PublicHandlers import TimeHandler
+from handlers.TimeHandler import TimeHandler
 from libs.BotManager import BotManager
 from libs.Identicon import identicon
 from libs.StringCoding import encode

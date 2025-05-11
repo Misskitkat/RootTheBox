@@ -27,7 +27,7 @@ from os import urandom
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.types import Boolean, Integer, String
 
-from handlers.PublicHandlers import TimeHandler
+from handlers.TimeHandler import TimeHandler
 from libs.StringCoding import encode
 from models import dbsession
 from models.BaseModels import DatabaseObject
