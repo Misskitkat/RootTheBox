@@ -209,6 +209,7 @@ class AdminCreateHandler(BaseHandler):
                 box = Box(corporation_id=corp.id, game_level_id=level.id)
                 box.name = self.get_argument("name", "")
                 box.description = self.get_argument("description", "")
+                box.automatic_flag = self.get_argument("automatic_flag", 1) ###
                 box.flag_submission_type = FlagsSubmissionType[
                     self.get_argument("flag_submission_type", "")
                 ]

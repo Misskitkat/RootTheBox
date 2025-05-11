@@ -80,6 +80,7 @@ class Box(DatabaseObject):
     _value = Column(Integer, nullable=True)
     _locked = Column(Boolean, default=False, nullable=False)
     _order = Column(Integer, nullable=True, index=True)
+    _automatic_flag = Column(Boolean, default=False, nullable=False)
 
     garbage = Column(
         String(32),
@@ -262,6 +263,25 @@ class Box(DatabaseObject):
         self._description = str(value)
 
     @property
+    def automatic_flag(self): ###
+        """Determines if a box will have automatic static flags created."""
+        if self._automatic_flag is None:
+            return False
+        return self._automatic_flag
+
+    @automatic_flag.setter
+    def automatic_flag(self, value):
+        """Setter method for _automatic"""
+        if value is None:
+            value = False
+        elif isinstance(value, int):
+            value = value == 1
+        elif isinstance(value, str):
+            value = value.lower() in ["true", "1"]
+        assert isinstance(value, bool)
+        self._automatic_flag = value
+
+    @property
     def difficulty(self):
         return (
             self._difficulty
@@ -312,7 +332,7 @@ class Box(DatabaseObject):
 
     @property
     def locked(self):
-        """Determines if an admin has locked an box."""
+        """Determines if an admin has locked a box."""
         if self.locked_corp():
             return True
         if self.locked_level():

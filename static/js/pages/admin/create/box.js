@@ -26,6 +26,22 @@ $(document).ready(function() {
         $("#flag-submission-type-single-box-icon").removeClass("fa-square-o");
         $("#flag-submission-type-single-box-icon").addClass("fa-check-square-o");
     });
+    
+    $("#automatic-flag-enable").click(function() {
+        $("#automatic-flag").val(1);
+        $("#automatic-flag-enable-icon").removeClass("fa-square-o");
+        $("#automatic-flag-enable-icon").addClass("fa-check-square-o");
+        $("#automatic-flag-disable-icon").removeClass("fa-check-square-o");
+        $("#automatic-flag-disable-icon").addClass("fa-square-o");
+    });
+
+    $("#automatic-flag-disable").click(function() {
+        $("#automatic-flag").val(0);
+        $("#automatic-flag-disable-icon").removeClass("fa-square-o");
+        $("#automatic-flag-disable-icon").addClass("fa-check-square-o");
+        $("#automatic-flag-enable-icon").removeClass("fa-check-square-o");
+        $("#automatic-flag-enable-icon").addClass("fa-square-o");
+    });
 
     /* Popovers */
     $("#box-name").popover({placement:'right', trigger:'hover'});
@@ -34,6 +50,7 @@ $(document).ready(function() {
     $("#operating-system").popover({placement:'right', trigger:'hover'});
     $("#capture-message").popover({placement:'right', trigger:'hover'});
     $("#description").popover({placement:'right', trigger:'hover'});
+    $("#automatic-flag-button").popover({placement:'right', trigger:'hover'});
     $("#flag-submission-type-button").popover({placement:'right', trigger:'hover'});
     $("#difficulty").popover({placement:'right', trigger:'hover'});
     $("#reward").popover({placement:'right', trigger:'hover'});

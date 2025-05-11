@@ -77,6 +77,7 @@ $(document).ready(function() {
     $("#reward").popover({placement:'right', trigger:'hover'});
     $("#box-uuid").popover({placement:'right', trigger:'hover'});
     $("#case-button").popover({placement:'right', trigger:'hover'});
+    $("#optional-button").popover({placement:'right', trigger:'hover'});
 
     $("#case-enable").click(function() {
         $("#case-sensitive").val(1);
