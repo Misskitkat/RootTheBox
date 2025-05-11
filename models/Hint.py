@@ -29,7 +29,7 @@ from datetime import datetime
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.types import Integer, String, Unicode, DateTime
 
-from handlers.TimeHandler import TimeHandler
+from libs.TimeHandler import TimeHandler
 from libs.ValidationError import ValidationError
 from models import dbsession
 from models.BaseModels import DatabaseObject

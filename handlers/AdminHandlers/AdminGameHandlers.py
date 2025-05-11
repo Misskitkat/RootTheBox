@@ -38,7 +38,7 @@ from tornado.ioloop import PeriodicCallback
 from tornado.options import options
 
 from handlers.BaseHandlers import BaseHandler
-from handlers.TimeHandler import TimeHandler
+from libs.TimeHandler import TimeHandler
 from libs.ConfigHelpers import save_config
 from libs.ConsoleColors import *
 from libs.EventManager import EventManager
