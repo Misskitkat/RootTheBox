@@ -26,6 +26,7 @@ import re
 import xml.etree.cElementTree as ET
 from builtins import str
 from uuid import uuid4
+import logging
 
 from dateutil.parser import parse
 from past.utils import old_div
@@ -43,6 +44,8 @@ from models.FlagChoice import FlagChoice
 from models.Penalty import Penalty
 from models.Relationships import team_to_flag, user_to_flag
 from models.Team import Team
+
+from libs.StringCoding import automatic_random_flag
 
 ### Constants
 FLAG_STATIC = "static"
@@ -445,8 +448,27 @@ class Flag(DatabaseObject):
                     choices.append(flagchoice.choice)
         return json.dumps(choices)
 
+    def check_automatic_flag(self, box_id): ###
+        box = dbsession.query(Box).filter_by(id=box_id).first()
+        if box:
+            if box.automatic_flag == 1:
+                return 1
+            else:
+                return 0
+        return 0
+
     def capture(self, submission):
         if self._type == FLAG_STATIC:
+            if self.check_automatic_flag(self.box_id) == 1: ###
+                random = automatic_random_flag(32)
+                logging.info("Tried to create a new flag, token is: %s" %random)
+                create_automatic_flag = self.create_flag(_type=FLAG_STATIC, box=self.box,
+                                                         name = self.name + "'s Random Question",
+                                                         raw_token=random,
+                                                         description= "randomly generated flag for " + self.name,
+                                                         value=self.value)
+                dbsession.add(create_automatic_flag)
+                dbsession.commit()
             if self._case_sensitive == 0:
                 return (
                     str(self.token).lower().strip() == str(submission).lower().strip()

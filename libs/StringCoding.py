@@ -24,6 +24,8 @@ Created on Jul 14, 2018
 import codecs
 import sys
 from base64 import b64decode, b64encode
+import random
+import string
 
 
 def encode(s, name="utf-8", *args, **kwargs):
@@ -86,3 +88,7 @@ def set_type(value, basevalue):
     elif type(bytes(value)) == basetype:
         return bytes(value)
     return value
+
+def automatic_random_flag(number): ###
+    ascii_characters = string.ascii_letters + string.digits + string.punctuation
+    return ''.join(random.choices(ascii_characters, k = number))
