@@ -434,8 +434,7 @@ class AdminConfigurationHandler(BaseHandler):
         self.config.password_upgrade_cost = self.get_int("password_upgrade_cost", 1000)
         self.config.bribe_cost = self.get_int("bribe_cost", 2500)
         self.config.max_pastebin_size = self.get_int("max_pastebin_size", 4096)
-        # TimeHandler.set_timezone(self.get_argument("time_zone", "America/New York"))
-        self.config.timezone = self.get_argument("time_zone", "America/New York")
+        self.config.time_zone = self.get_argument("time_zone", "America/New_York")
         self.render("admin/configuration.html", errors=errors, config=self.config)
 
     def config_bots(self):

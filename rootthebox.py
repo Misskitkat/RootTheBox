@@ -628,6 +628,14 @@ define(
 )
 
 define(
+    "time_zone",
+    default="America/New_York",
+    group="game",
+    help="the timezone of the game",
+    type=game_type,
+)
+
+define(
     "ctf_logo",
     default="/static/images/rtb2.png",
     group="game",
