@@ -12,7 +12,7 @@ class TimeHandler:
 
     def set_timezone(self, timezone_str):
         try:
-            cls._timezone = pytz.timezone(timezone_str)
+            self._timezone = pytz.timezone(timezone_str)
         except pytz.UnknownTimeZoneError:
             print(f"Unknown timezone: {timezone_str}")
 
