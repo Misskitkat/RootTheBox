@@ -101,6 +101,9 @@ def setup():
     create_tables(engine, metadata, options.log_sql)
     sys.stdout.flush()
 
+    TimeHandler().refresh_timezone()
+    print(INFO + "Current time: %s" % current_time())
+
     from models.Theme import Theme
 
     themes = Theme.all()

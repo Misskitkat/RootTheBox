@@ -1,18 +1,17 @@
 from datetime import datetime
 import configparser
 import pytz
+import re
 
 
-def read_timezone_from_cfg(path="files/rootthebox.cfg"):
-    config = configparser.ConfigParser()
-    config.read(path)
-
-    try:
-        tz = config.get('general', 'time_zone').strip('"').strip("'")
-        return pytz.timezone(tz)
-    except (configparser.NoSectionError, configparser.NoOptionError, pytz.UnknownTimeZoneError) as e:
-        print(f"Error reading timezone: {e}")
-        return pytz.timezone("UTC")
+def read_timezone_from_cfg(path="./files/rootthebox.cfg"):
+    pattern = r'^\s*time_zone\s*=\s*(".*?")'
+    with open(path, 'r') as file:
+        for line in file:
+            match = re.search(pattern, line.strip())
+            if match:
+                return match.group(1).strip('"')
+    return "UTC"    # Default return
 
 
 class TimeHandler:
@@ -41,3 +40,7 @@ class TimeHandler:
 
     def get_current_time(self):
         return str(datetime.now(self._timezone)).split(" ")[1].split(".")[0]
+
+    def refresh_timezone(self):
+        self.set_timezone(read_timezone_from_cfg())
+        return None
