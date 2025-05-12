@@ -58,6 +58,7 @@ except ImportError:
     from urlparse import urlparse
 from datetime import datetime
 
+from libs.TimeHandler import TimeHandler
 from libs.StringCoding import encode
 
 try:
@@ -879,7 +880,7 @@ class WebSocketApp(object):
 ###################
 def current_time():
     """Return current time as HH:MM:SS"""
-    return time.strftime("%H:%M:%S")
+    return TimeHandler().get_current_time()
 
 
 ###################

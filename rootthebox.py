@@ -42,7 +42,7 @@ from setup import __version__
 
 def current_time():
     """Nicely formatted current time as a string"""
-    return TimeHandler.get_datetime()
+    return TimeHandler().get_datetime()
 
 
 def start():

@@ -273,7 +273,7 @@ class Team(DatabaseObject):
         for item in reversed(self.game_history):
             if item.type == "flag_count":
                 return item.created.strftime("%s")
-        return TimeHandler.get_datetime().strftime("%s")
+        return TimeHandler().get_datetime().strftime("%s")
 
     def level_flags(self, lvl):
         """Given a level number return all flags captured for that level"""

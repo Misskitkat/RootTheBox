@@ -375,7 +375,7 @@ class User(DatabaseObject):
     def is_expired(self):
         expired = self._expire
         if expired and expired != "":
-            return TimeHandler.get_datetime() > expired
+            return TimeHandler().get_datetime() > expired
         return False
 
     def validate_email(self, token):

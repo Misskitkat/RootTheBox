@@ -57,6 +57,8 @@ from builtins import chr, object, range
 from datetime import datetime
 from hashlib import sha1, sha512
 
+from libs.TimeHandler import TimeHandler
+
 ### Settings
 __version__ = "0.1.1"
 __domain__ = "game.rootthebox.com"
@@ -101,7 +103,7 @@ INFO = bold + C + "[*]" + W
 WARN = bold + R + "[!]" + W
 PROMPT = bold + P + "[?]" + W
 def current_time():
-    return str(datetime.now()).split(" ")[1].split(".")[0]
+    return TimeHandler().get_current_time()
 
 """
 websocket python client.

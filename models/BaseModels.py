@@ -26,6 +26,7 @@ from datetime import datetime
 from sqlalchemy import Column
 from sqlalchemy.ext.declarative import declarative_base, declared_attr
 from sqlalchemy.types import DateTime, Integer
+from libs.TimeHandler import TimeHandler
 
 
 class _DatabaseObject(object):
@@ -41,7 +42,7 @@ class _DatabaseObject(object):
         )
 
     id = Column(Integer, primary_key=True)  # lint:ok
-    created = Column(DateTime, default=datetime.now)
+    created = Column(DateTime, default=TimeHandler().get_datetime())
 
 
 # Create an instance called "BaseObject"

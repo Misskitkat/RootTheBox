@@ -39,6 +39,7 @@ from sqlalchemy.sql import and_
 from sqlalchemy.types import DateTime, Integer, Unicode
 from tornado.options import options
 
+from libs.TimeHandler import TimeHandler
 from libs.Singleton import Singleton
 from models import dbsession
 from models.Box import Box
@@ -59,7 +60,7 @@ class _BotDatabaseObject(object):
         )
 
     id = Column(Integer, primary_key=True, unique=True, nullable=False)
-    created = Column(DateTime, default=datetime.now)
+    created = Column(DateTime, default=TimeHandler().get_datetime())
 
 
 BotDatabaseObject = declarative_base(cls=_BotDatabaseObject)
@@ -68,7 +69,7 @@ BotDatabaseObject = declarative_base(cls=_BotDatabaseObject)
 class Bot(BotDatabaseObject):
     """Bot Class"""
 
-    last_ping = Column(DateTime, default=datetime.now)
+    last_ping = Column(DateTime, default=TimeHandler().get_datetime())
     wsock_uuid = Column(Unicode(36), nullable=False)
     team_uuid = Column(Unicode(36), nullable=False)
     box_uuid = Column(Unicode(36), nullable=False)

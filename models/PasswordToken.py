@@ -67,6 +67,6 @@ class PasswordToken(DatabaseObject):
 
     def is_expired(self, hours=3):
         """Check if the token is expired"""
-        now = TimeHandler.get_datetime()
+        now = TimeHandler().get_datetime()
         expired = self.created + timedelta(hours=hours)
         return now > expired

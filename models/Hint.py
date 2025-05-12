@@ -128,7 +128,7 @@ class Hint(DatabaseObject):
     def unlock_time(self, time):
         if time and len(time) > 0:
             print(time)
-            self._unlock_time = TimeHandler.get_iso_time()
+            self._unlock_time = TimeHandler().get_iso_time()
         else:
             self._unlock_time = None
 
@@ -136,7 +136,7 @@ class Hint(DatabaseObject):
     def is_unlocked(self):
         unlocked = self._unlock_time
         if unlocked and unlocked != "":
-            return TimeHandler.get_datetime() > unlocked
+            return TimeHandler().get_datetime() > unlocked
         return False
         
     def to_xml(self, parent):
