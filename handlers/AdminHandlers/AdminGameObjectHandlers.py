@@ -325,7 +325,7 @@ class AdminCreateHandler(BaseHandler):
             hint = Hint(box_id=box.id)
             hint.price = self.get_argument("price", "")
             hint.description = self.get_argument("description", "")
-            hint.rank = self.get_argument("rank", 0)  # Add this line
+            hint.rank = self.get_argument("rank", 0)  # Added this line
             flag = Flag.by_uuid(self.get_argument("flag_uuid", ""))
             if flag:
                 hint.flag_id = flag.id
@@ -978,7 +978,7 @@ class AdminEditHandler(BaseHandler):
                 hint.price = price
             description = self.get_argument("description", "")
             hint.description = description
-            # Add rank handling
+            # Adding rank handling
             rank = self.get_argument("rank", 0)
             if int(hint.rank) != int(rank):
                 hint.rank = rank
