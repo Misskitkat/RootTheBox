@@ -29,6 +29,7 @@ from tornado.options import options
 from handlers.BaseHandlers import BaseHandler
 from libs.SecurityDecorators import authenticated
 from models.Corporation import Corporation
+import files.game_materials
 
 
 class MaterialsHandler(BaseHandler):
@@ -127,3 +128,20 @@ def has_box_materials(box):
     if os.path.isdir(path):
         return os.path.join(corp.name, box.name)
     return False
+
+
+def automatic_flag_file(token, box_id, name):
+    # the token is what is in the text file,
+    # the box_id and name are going to be concatenated to a .txt name so that it is identifiable.
+    materials_dir = options.game_materials_dir
+
+    # Make sure the directory exists
+    os.makedirs(materials_dir, exist_ok=True)
+
+    # Construct the file name and path
+    safe_name = f"{box_id}_{name}.txt".replace(" ", "_")
+    file_path = os.path.join(materials_dir, safe_name)
+
+    # Write the token to the file
+    with open(file_path, "w") as f:
+        f.write(token)

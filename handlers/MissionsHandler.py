@@ -43,6 +43,8 @@ from models.Hint import Hint
 from models.Penalty import Penalty
 from models.Team import Team
 
+from handlers.MaterialsHandler import automatic_flag_file
+
 
 class FirstLoginHandler(BaseHandler):
     @authenticated
@@ -284,6 +286,8 @@ class BoxHandler(BaseHandler):
             create_automatic_flag.optional = True
             dbsession.add(create_automatic_flag)
             dbsession.commit()
+            #create a function that will take the random string, box, and name as parameters
+            automatic_flag_file(random, flag.box, flag.name)
         if options.teams:
             teamval = "team's "
         else:
