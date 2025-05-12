@@ -1,5 +1,19 @@
 from datetime import datetime
+import configparser
 import pytz
+
+
+def read_timezone_from_cfg(path="files/rootthebox.cfg"):
+    config = configparser.ConfigParser()
+    config.read(path)
+
+    try:
+        tz = config.get('general', 'time_zone').strip('"').strip("'")
+        return pytz.timezone(tz)
+    except (configparser.NoSectionError, configparser.NoOptionError, pytz.UnknownTimeZoneError) as e:
+        print(f"Error reading timezone: {e}")
+        return pytz.timezone("UTC")
+
 
 class TimeHandler:
     _instance = None
@@ -7,7 +21,7 @@ class TimeHandler:
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super(TimeHandler, cls).__new__(cls)
-            cls._instance._timezone = pytz.timezone('US/Eastern')  # Default
+            cls._instance._timezone = read_timezone_from_cfg() # Default
         return cls._instance
 
     def set_timezone(self, timezone_str):
