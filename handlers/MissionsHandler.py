@@ -275,7 +275,7 @@ class BoxHandler(BaseHandler):
             return
 
     def success_capture(self, user, flag, old_reward=None):
-        if flag.check_automatic_flag(flag.box_id) == 1:
+        if flag.check_automatic_flag(flag.box_id) == 1 or flag.automatic_flag == 1:
             random = automatic_random_flag(32)
             logging.info("Tried to create a new flag, token is: %s" % random)
             create_automatic_flag = flag.create_flag(_type=FLAG_STATIC, box=flag.box,

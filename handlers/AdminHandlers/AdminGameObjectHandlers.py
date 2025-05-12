@@ -356,6 +356,7 @@ class AdminCreateHandler(BaseHandler):
         flag.capture_message = self.get_argument("capture_message", "")
         flag.case_sensitive = self.get_argument("case-sensitive", 1)
         flag.optional = self.get_argument("optional", 1)
+        flag.automatic_flag = self.get_argument("automatic_flag", 1) ###
         for fl in box.flags:
             fl.order
             self.dbsession.add(fl)

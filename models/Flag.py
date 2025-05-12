@@ -86,6 +86,7 @@ class Flag(DatabaseObject):
     _type = Column(Unicode(16), default=False)
     _locked = Column(Boolean, default=False, nullable=False)
     _optional = Column(Boolean, default=False, nullable=False)
+    _automatic_flag = Column(Boolean, default=False, nullable=False)
 
     flag_attachments = relationship(
         "FlagAttachment",
@@ -427,6 +428,25 @@ class Flag(DatabaseObject):
             value = value.lower() in ["true", "1"]
         assert isinstance(value, bool)
         self._optional = value
+
+    @property
+    def automatic_flag(self):  ###
+        """Determines if a flag will have automatic static flags created."""
+        if self._automatic_flag is None:
+            return False
+        return self._automatic_flag
+
+    @automatic_flag.setter
+    def automatic_flag(self, value):
+        """Setter method for _automatic"""
+        if value is None:
+            value = False
+        elif isinstance(value, int):
+            value = value == 1
+        elif isinstance(value, str):
+            value = value.lower() in ["true", "1"]
+        assert isinstance(value, bool)
+        self._automatic_flag = value
 
     def choices(self):
         # inlucdes the choice uuid - needed for editing choice

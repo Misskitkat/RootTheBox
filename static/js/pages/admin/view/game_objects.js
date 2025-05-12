@@ -343,6 +343,22 @@ $(document).ready(function() {
         $("#automatic-flag-enable-icon").addClass("fa-square-o");
     });
 
+    $("#automatic-flag-enable").click(function() {
+        $("#automatic-flag").val(1);
+        $("#automatic-flag-enable-icon").removeClass("fa-square-o");
+        $("#automatic-flag-enable-icon").addClass("fa-check-square-o");
+        $("#automatic-flag-disable-icon").removeClass("fa-check-square-o");
+        $("#automatic-flag-disable-icon").addClass("fa-square-o");
+    });
+
+    $("#automatic-flag-disable").click(function() {
+        $("#automatic-flag").val(0);
+        $("#automatic-flag-disable-icon").removeClass("fa-square-o");
+        $("#automatic-flag-disable-icon").addClass("fa-check-square-o");
+        $("#automatic-flag-enable-icon").removeClass("fa-check-square-o");
+        $("#automatic-flag-enable-icon").addClass("fa-square-o");
+    });
+
     $(".add-more").click(function(){
         var html = $(".copy").html();
         var siblings = $(".after-add-more").siblings(":last");

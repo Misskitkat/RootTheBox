@@ -78,6 +78,7 @@ $(document).ready(function() {
     $("#box-uuid").popover({placement:'right', trigger:'hover'});
     $("#case-button").popover({placement:'right', trigger:'hover'});
     $("#optional-button").popover({placement:'right', trigger:'hover'});
+    $("#automatic-flag-button").popover({placement:'right', trigger:'hover'});
 
     $("#case-enable").click(function() {
         $("#case-sensitive").val(1);
@@ -111,6 +112,22 @@ $(document).ready(function() {
         $("#optional-enable-icon").removeClass("fa-check-square-o");
         $("#optional-enable-icon").addClass("fa-square-o");
         testToken();
+    });
+
+    $("#automatic-flag-enable").click(function() {
+        $("#automatic-flag").val(1);
+        $("#automatic-flag-enable-icon").removeClass("fa-square-o");
+        $("#automatic-flag-enable-icon").addClass("fa-check-square-o");
+        $("#automatic-flag-disable-icon").removeClass("fa-check-square-o");
+        $("#automatic-flag-disable-icon").addClass("fa-square-o");
+    });
+
+    $("#automatic-flag-disable").click(function() {
+        $("#automatic-flag").val(0);
+        $("#automatic-flag-disable-icon").removeClass("fa-square-o");
+        $("#automatic-flag-disable-icon").addClass("fa-check-square-o");
+        $("#automatic-flag-enable-icon").removeClass("fa-check-square-o");
+        $("#automatic-flag-enable-icon").addClass("fa-square-o");
     });
 
 
