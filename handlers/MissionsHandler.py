@@ -33,10 +33,11 @@ from tornado.options import options
 
 from handlers.BaseHandlers import BaseHandler
 from libs.SecurityDecorators import authenticated, game_started
-from libs.StringCoding import decode, encode
+from libs.StringCoding import decode, encode, automatic_random_flag
 from libs.WebhookHelpers import *
+from models import dbsession
 from models.Box import Box, FlagsSubmissionType
-from models.Flag import Flag
+from models.Flag import Flag, FLAG_STATIC
 from models.GameLevel import GameLevel
 from models.Hint import Hint
 from models.Penalty import Penalty
@@ -272,6 +273,17 @@ class BoxHandler(BaseHandler):
             return
 
     def success_capture(self, user, flag, old_reward=None):
+        if flag.check_automatic_flag(flag.box_id) == 1:
+            random = automatic_random_flag(32)
+            logging.info("Tried to create a new flag, token is: %s" % random)
+            create_automatic_flag = flag.create_flag(_type=FLAG_STATIC, box=flag.box,
+                                                     name=flag.name + "'s Random Question",
+                                                     raw_token=random,
+                                                     description="randomly generated flag for " + flag.name,
+                                                     value=flag.value)
+            create_automatic_flag.optional = True
+            dbsession.add(create_automatic_flag)
+            dbsession.commit()
         if options.teams:
             teamval = "team's "
         else:

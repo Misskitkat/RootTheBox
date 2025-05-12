@@ -459,16 +459,6 @@ class Flag(DatabaseObject):
 
     def capture(self, submission):
         if self._type == FLAG_STATIC:
-            if self.check_automatic_flag(self.box_id) == 1: ###
-                random = automatic_random_flag(32)
-                logging.info("Tried to create a new flag, token is: %s" %random)
-                create_automatic_flag = self.create_flag(_type=FLAG_STATIC, box=self.box,
-                                                         name = self.name + "'s Random Question",
-                                                         raw_token=random,
-                                                         description= "randomly generated flag for " + self.name,
-                                                         value=self.value)
-                dbsession.add(create_automatic_flag)
-                dbsession.commit()
             if self._case_sensitive == 0:
                 return (
                     str(self.token).lower().strip() == str(submission).lower().strip()
