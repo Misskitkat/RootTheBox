@@ -308,6 +308,13 @@ class ScoreboardFeedHandler(BaseHandler):
         self.render("scoreboard/feed.html", hostname=hostname)
 
 
+class ScoreboardAchievementsHandler(BaseHandler):
+    def get(self, *args, **kwargs):
+        """Renders the scoreboard achievement page"""
+        hostname = "%s://%s" % (self.request.protocol, self.request.host)
+        self.render("scoreboard/achievement.html", hostname=hostname)
+
+
 class ScoreboardHistorySocketHandler(WebSocketHandler):
 
     connections = set()
