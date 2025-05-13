@@ -22,9 +22,9 @@
         <tbody>
             {% for achievement in achievements %}
             <tr>
-                <td>{{ achievement.name }}</td>
-                <td>{{ achievement.achievement }}</td>
-                <td>{{ achievement.time }}</td>
+                <td>{{ achievement['name'] }}</td>
+                <td>{{ achievement['achievement'] }}</td>
+                <td>{{ achievement['time'] }}</td>
             </tr>
             {% end %}
         </tbody>

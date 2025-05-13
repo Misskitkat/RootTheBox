@@ -336,7 +336,6 @@ class ScoreboardAchievementsHandler(BaseHandler):
         self.render("scoreboard/achievement.html", hostname=hostname, achievements=achievement_data)
 
 
-
 class ScoreboardHistorySocketHandler(WebSocketHandler):
 
     connections = set()
