@@ -45,6 +45,7 @@ from models.Category import Category
 from models.Team import Team
 from models.User import User
 from models.WallOfSheep import WallOfSheep
+from models.User import User
 
 
 class ScoreboardDataSocketHandler(WebSocketHandler):
@@ -313,6 +314,26 @@ class ScoreboardAchievementsHandler(BaseHandler):
         """Renders the scoreboard achievement page"""
         hostname = "%s://%s" % (self.request.protocol, self.request.host)
         self.render("scoreboard/achievement.html", hostname=hostname)
+
+
+class ScoreboardAchievementsHandler(BaseHandler):
+    def get(self, *args, **kwargs):
+        """Renders the scoreboard achievement page"""
+        
+        achievements = Achievement.all()
+    
+        achievement_data = []
+        for achievement in achievements:
+            data = {
+                "name": User.by_id(achievement.user),
+                "achievement": achievement.name,
+                "time": achievement._datetime
+            }
+            achievement_data.append(data)
+        
+        hostname = "%s://%s" % (self.request.protocol, self.request.host)
+        self.render("scoreboard/achievement.html", hostname=hostname, achievements=achievement_data)
+
 
 
 class ScoreboardHistorySocketHandler(WebSocketHandler):
