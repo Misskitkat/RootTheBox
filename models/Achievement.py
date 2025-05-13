@@ -29,8 +29,6 @@ from models import dbsession
 from models.BaseModels import DatabaseObject
 
 
-
-
 class Achievement(DatabaseObject):
     """
     Achievement definition
@@ -71,7 +69,7 @@ class Achievement(DatabaseObject):
     
 
 def try_grant_achievement(user, ach_name) -> bool:
-    user_achs = Achievement.by_user(user.id)
+    user_achs = Achievement.by_user(user)
     if any(x.name == ach_name for x in user_achs):
         return False
     

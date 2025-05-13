@@ -133,3 +133,4 @@ from models.Team import Team
 from models.Theme import Theme, ThemeFile
 from models.User import User
 from models.WallOfSheep import WallOfSheep
+from models.Achievement import Achievement
