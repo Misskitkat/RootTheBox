@@ -37,6 +37,7 @@ from models.Box import Box
 from models.Flag import Flag
 from models.Relationships import team_to_hint
 
+import logging
 
 class Hint(DatabaseObject):
 
@@ -152,7 +153,9 @@ class Hint(DatabaseObject):
     @property
     def is_unlocked(self):
         unlocked = self._unlock_time
-        if unlocked and unlocked != "":
+        if unlocked == "" or unlocked is None:
+            return True
+        if unlocked:
             return TimeHandler().get_datetime_object() > unlocked
         return False
         
