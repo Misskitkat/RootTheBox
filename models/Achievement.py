@@ -28,6 +28,8 @@ from sqlalchemy.types import Integer, String, Unicode, DateTime
 from models import dbsession
 from models.BaseModels import DatabaseObject
 
+from libs.TimeHandler import TimeHandler
+
 
 class Achievement(DatabaseObject):
     """
@@ -37,6 +39,7 @@ class Achievement(DatabaseObject):
     uuid = Column(String(36), unique=True, nullable=False, default=lambda: str(uuid4()))
     user = Column(Integer, ForeignKey("user.id"), nullable=False)
     name = Column(String(50), nullable=False)
+    _datetime = Column(DateTime, nullable=False, default=lambda: TimeHandler().get_datetime())
 
     __table_args__ = (
         UniqueConstraint("user", "name"),
@@ -45,6 +48,10 @@ class Achievement(DatabaseObject):
     FLAG_ACH = "Captured their first Flag!"
     BOX_ACH = "Completed their first Box!"
     HINT_ACH = "Used their first Hint!"
+
+    @property
+    def datetime(self):
+        return self._datetime
 
     @classmethod
     def all(cls):
