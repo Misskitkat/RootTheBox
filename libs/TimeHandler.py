@@ -20,7 +20,7 @@ class TimeHandler:
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super(TimeHandler, cls).__new__(cls)
-            cls._instance._timezone = read_timezone_from_cfg() # Default
+            cls._instance._timezone = pytz.timezone(read_timezone_from_cfg())
         return cls._instance
 
     def set_timezone(self, timezone_str):
@@ -35,8 +35,16 @@ class TimeHandler:
     def get_datetime(self):
         return datetime.now(self._timezone)
 
-    def get_iso_time(self):
-        return datetime.now(self._timezone).strftime("%Y-%m-%dT%H:%M")
+    def get_datetime_object(self):
+        now_utc = datetime.utcnow()
+        now_utc = pytz.utc.localize(now_utc)
+        now_local = now_utc.astimezone(self._timezone)
+        return now_local.replace(tzinfo=None)
+
+    def get_iso_time(self, time):
+        now_local = datetime.now(self._timezone)
+        now_formatted = now_local.strptime(time, "%Y-%m-%dT%H:%M")
+        return now_formatted
 
     def get_current_time(self):
         return str(datetime.now(self._timezone)).split(" ")[1].split(".")[0]
