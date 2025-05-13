@@ -41,7 +41,7 @@ class Achievement(DatabaseObject):
     name = Column(String(50), nullable=False)
 
     __table_args__ = (
-        UniqueConstraint("user", "name")
+        UniqueConstraint("user", "name"),
     )
 
     FLAG_ACH = "Captured their first Flag!"
