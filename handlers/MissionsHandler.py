@@ -42,7 +42,8 @@ from models.GameLevel import GameLevel
 from models.Hint import Hint
 from models.Penalty import Penalty
 from models.Team import Team
-
+from models.Achievement import Achievement, try_grant_achievement
+from models.Notification import SUCCESS, Notification
 from handlers.MaterialsHandler import automatic_flag_file
 
 
@@ -324,6 +325,8 @@ class BoxHandler(BaseHandler):
                 send_box_complete_webhook(user, box)
             else:
                 success.append("Congratulations! You have completed " + box.name + ".")
+            if try_grant_achievement(user, Achievement.BOX_ACH):
+                Notification.create_broadcast(None, "Achievement Get", f"{user.handle} ({user.team.name}) just f{Achievement.BOX_ACH}", SUCCESS)
 
         # Check for Level Completion
         level = GameLevel.by_id(box.game_level_id)
@@ -445,6 +448,8 @@ class BoxHandler(BaseHandler):
                 user.money += flag_value
                 team.add_flag(flag)
                 user.flags.append(flag)
+                if try_grant_achievement(user, Achievement.FLAG_ACH):
+                    Notification.create_broadcast(None, "Achievement Get", f"{user.handle} ({team.name}) just f{Achievement.FLAG_ACH}", SUCCESS)
                 self.dbsession.add(user)
                 self.dbsession.add(team)
                 self.dbsession.commit()
@@ -530,6 +535,9 @@ class PurchaseHintHandler(BaseHandler):
                     % (user.handle, user.team.name, hint.price, hint.box.name)
                 )
                 self._purchase_hint(hint, user.team)
+                if try_grant_achievement(user, Achievement.HINT_ACH):
+                    Notification.create_broadcast(None, "Achievement Get", f"{user.handle} ({user.team.name}) just f{Achievement.HINT_ACH}", SUCCESS)
+                
                 self.render_page(hint.box)
             else:
                 self.render_page(
