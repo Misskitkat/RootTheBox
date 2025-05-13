@@ -46,6 +46,7 @@ from models.Team import Team
 from models.User import User
 from models.WallOfSheep import WallOfSheep
 from models.User import User
+from models.Achievement import Achievement
 
 
 class ScoreboardDataSocketHandler(WebSocketHandler):
