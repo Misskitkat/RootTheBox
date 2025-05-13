@@ -33,6 +33,7 @@ from sqlalchemy.orm import backref, relationship
 from sqlalchemy.types import Integer, String, Unicode
 from tornado.options import options
 
+from libs.TimeHandler import TimeHandler
 from libs.BotManager import BotManager
 from libs.Identicon import identicon
 from libs.StringCoding import encode
@@ -272,7 +273,7 @@ class Team(DatabaseObject):
         for item in reversed(self.game_history):
             if item.type == "flag_count":
                 return item.created.strftime("%s")
-        return datetime.now().strftime("%s")
+        return TimeHandler().get_datetime().strftime("%s")
 
     def level_flags(self, lvl):
         """Given a level number return all flags captured for that level"""

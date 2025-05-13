@@ -29,7 +29,6 @@ import subprocess
 import time
 import xml.etree.cElementTree as ET
 from builtins import str
-from datetime import datetime
 from string import printable
 from tempfile import NamedTemporaryFile
 
@@ -39,6 +38,7 @@ from tornado.ioloop import PeriodicCallback
 from tornado.options import options
 
 from handlers.BaseHandlers import BaseHandler
+from libs.TimeHandler import TimeHandler
 from libs.ConfigHelpers import save_config
 from libs.ConsoleColors import *
 from libs.EventManager import EventManager
@@ -434,6 +434,8 @@ class AdminConfigurationHandler(BaseHandler):
         self.config.password_upgrade_cost = self.get_int("password_upgrade_cost", 1000)
         self.config.bribe_cost = self.get_int("bribe_cost", 2500)
         self.config.max_pastebin_size = self.get_int("max_pastebin_size", 4096)
+        self.config.time_zone = self.get_argument("time_zone", "America/New_York")
+        TimeHandler().set_timezone(self.config.time_zone)
         self.render("admin/configuration.html", errors=errors, config=self.config)
 
     def config_bots(self):
@@ -524,7 +526,7 @@ class AdminGitStatusHandler(BaseHandler):
 
     def current_time(self):
         """Nicely formatted current time as a string"""
-        return str(datetime.now()).split(" ")[1].split(".")[0]
+        return TimeHandler.get_current_time()
 
 
 class AdminExportHandler(BaseHandler):

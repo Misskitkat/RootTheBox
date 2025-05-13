@@ -51,6 +51,7 @@ from pbkdf2 import PBKDF2
 from tornado.options import options
 
 from handlers.BaseHandlers import BaseHandler
+from libs.TimeHandler import TimeHandler
 from libs.EmailHelpers import (
     create_email_headers,
     get_email_message,
@@ -191,7 +192,7 @@ class CodeFlowHandler(BaseHandler):
         user.name = claims["name"]
         user.email = claims["email"]
         user.theme = options.default_theme
-        user.last_login = datetime.now()
+        user.last_login = TimeHandler().get_datetime()
         user.logins = 1
         if not self.is_admin(claims):
             user.team = Team.by_code(team_code)
@@ -329,7 +330,7 @@ class LoginHandler(BaseHandler):
         logging.info(
             "Successful login: %s from %s" % (user.handle, self.request.remote_ip)
         )
-        user.last_login = datetime.now()
+        user.last_login = TimeHandler().get_datetime()
         user.logins += 1
         self.dbsession.add(user)
         self.dbsession.commit()
@@ -967,3 +968,4 @@ class ValidEmailHandler(BaseHandler):
             self.render("public/login.html", info=info, errors=error)
         else:
             self.redirect("public/404")
+

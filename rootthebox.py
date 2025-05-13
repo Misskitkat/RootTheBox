@@ -33,6 +33,7 @@ from datetime import datetime
 import nose
 from tornado.options import define, options
 
+from libs.TimeHandler import TimeHandler
 from libs.ConfigHelpers import save_config, save_config_image
 from libs.ConsoleColors import *
 from libs.StringCoding import set_type
@@ -41,7 +42,7 @@ from setup import __version__
 
 def current_time():
     """Nicely formatted current time as a string"""
-    return str(datetime.now()).split(" ")[1].split(".")[0]
+    return TimeHandler().get_datetime()
 
 
 def start():
@@ -99,6 +100,9 @@ def setup():
 
     create_tables(engine, metadata, options.log_sql)
     sys.stdout.flush()
+
+    TimeHandler().refresh_timezone()
+    print(INFO + "Current time: %s" % current_time())
 
     from models.Theme import Theme
 
@@ -623,6 +627,14 @@ define(
     default="1.0",
     group="game",
     help="optional version for this game",
+    type=game_type,
+)
+
+define(
+    "time_zone",
+    default="America/New_York",
+    group="game",
+    help="the timezone of the game",
     type=game_type,
 )
 

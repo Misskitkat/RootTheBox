@@ -25,9 +25,11 @@ from builtins import str
 from uuid import uuid4
 from datetime import datetime
 
+
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.types import Integer, String, Unicode, DateTime
 
+from libs.TimeHandler import TimeHandler
 from libs.ValidationError import ValidationError
 from models import dbsession
 from models.BaseModels import DatabaseObject
@@ -126,7 +128,7 @@ class Hint(DatabaseObject):
     def unlock_time(self, time):
         if time and len(time) > 0:
             print(time)
-            self._unlock_time = datetime.strptime(time, "%Y-%m-%dT%H:%M")
+            self._unlock_time = TimeHandler().get_iso_time(time)
         else:
             self._unlock_time = None
 
@@ -134,7 +136,7 @@ class Hint(DatabaseObject):
     def is_unlocked(self):
         unlocked = self._unlock_time
         if unlocked and unlocked != "":
-            return datetime.now() > unlocked
+            return TimeHandler().get_datetime_object() > unlocked
         return False
         
     def to_xml(self, parent):

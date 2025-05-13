@@ -7,6 +7,7 @@ from datetime import datetime
 from past.builtins import basestring
 from tornado.options import options
 
+from libs.TimeHandler import TimeHandler
 from libs.ValidationError import ValidationError
 from libs.XSSImageCheck import is_xss_image
 
@@ -21,7 +22,7 @@ def save_config():
             "# Documentation: %s\n"
             % "https://github.com/moloch--/RootTheBox/wiki/Configuration-File-Details"
         )
-        fp.write("# Last updated: %s\n" % datetime.now())
+        fp.write("# Last updated: %s\n" % TimeHandler().get_datetime())
         for group in options.groups():
             # Shitty work around for Tornado 4.1
             if "rootthebox.py" in group.lower() or group == "":

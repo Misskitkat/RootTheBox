@@ -27,6 +27,7 @@ from os import urandom
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.types import Boolean, Integer, String
 
+from libs.TimeHandler import TimeHandler
 from libs.StringCoding import encode
 from models import dbsession
 from models.BaseModels import DatabaseObject
@@ -66,6 +67,6 @@ class PasswordToken(DatabaseObject):
 
     def is_expired(self, hours=3):
         """Check if the token is expired"""
-        now = datetime.now()
+        now = TimeHandler().get_datetime()
         expired = self.created + timedelta(hours=hours)
         return now > expired
