@@ -326,6 +326,7 @@ class AdminCreateHandler(BaseHandler):
             hint = Hint(box_id=box.id)
             hint.price = self.get_argument("price", "")
             hint.description = self.get_argument("description", "")
+            hint.rank = self.get_argument("rank", 0)  # Added this line
             flag = Flag.by_uuid(self.get_argument("flag_uuid", ""))
             if flag:
                 hint.flag_id = flag.id
@@ -980,6 +981,10 @@ class AdminEditHandler(BaseHandler):
                 hint.price = price
             description = self.get_argument("description", "")
             hint.description = description
+            # Adding rank handling
+            rank = self.get_argument("rank", 0)
+            if int(hint.rank) != int(rank):
+                hint.rank = rank
             flag = Flag.by_uuid(self.get_argument("hint-flag_uuid", ""))
             if flag:
                 flag_id = flag.id
@@ -1324,7 +1329,7 @@ class AdminTestTokenHandler(BaseHandler):
                 pattern = re.compile(token)
             test = pattern.match(submission) is not None
         elif flagtype == FLAG_DATETIME:
-            from dateutil.parser import parse
+            from dateutil.parser import parse # type: ignore
 
             try:
                 test = parse(token) == parse(submission)

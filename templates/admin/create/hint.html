@@ -42,6 +42,16 @@
                         </div>
                     </div>
                     <div class="control-group">
+                        <label class="control-label" for="rank">{{ _("Hint Order Rank") }}</label>
+                        <div class="controls">
+                            <input id="rank" name="rank" type="number" min="0" value="0"
+                                   placeholder="{{ _('Hint Display Order') }}"
+                                   rel="popover"
+                                   data-original-title="{{ _('Rank') }}"
+                                   data-content="{{ _('Lower numbers appear earlier. Example: 1, 2, 3...') }}">
+                        </div>
+                    </div>
+                    <div class="control-group">
                         <label class="control-label" for="description">{{_("Description")}}</label>
                         <div class="controls">
                             <textarea required class="toolbar" id="description" maxlength="4096" rows="5" name="description" type="text" placeholder="{{_('Hint')}}"

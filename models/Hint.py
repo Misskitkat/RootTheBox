@@ -51,6 +51,7 @@ class Hint(DatabaseObject):
     _price = Column(Integer, nullable=False)
     _description = Column(Unicode(4096), nullable=False)
     _unlock_time = Column(DateTime, default=None, nullable=True)
+    _rank = Column(Integer, default=0, nullable=False)  # Added rank column with default value of 0
 
     @classmethod
     def all(cls):
@@ -93,6 +94,11 @@ class Hint(DatabaseObject):
             .all()
         )
 
+    @classmethod
+    def by_rank(cls, rank):
+        """Returns all hints with the given rank"""
+        return dbsession.query(cls).filter_by(_rank=rank).all()
+
     @property
     def flag(self):
         return Flag.by_id(self.flag_id)
@@ -133,6 +139,17 @@ class Hint(DatabaseObject):
             self._unlock_time = None
 
     @property
+    def rank(self):
+        return self._rank
+
+    @rank.setter
+    def rank(self, value):
+        try:
+            self._rank = int(value)
+        except ValueError:
+            raise ValidationError("Hint rank must be an integer")
+
+    @property
     def is_unlocked(self):
         unlocked = self._unlock_time
         if unlocked and unlocked != "":
@@ -143,6 +160,7 @@ class Hint(DatabaseObject):
         hint_elem = ET.SubElement(parent, "hint")
         ET.SubElement(hint_elem, "price").text = str(self.price)
         ET.SubElement(hint_elem, "description").text = self._description
+        ET.SubElement(hint_elem, "rank").text = str(self.rank)  # Added rank to XML output
 
     def to_dict(self):
         flag = Flag.by_id(self.flag_id)
@@ -155,5 +173,6 @@ class Hint(DatabaseObject):
             "description": self.description,
             "flag_uuid": flag_uuid,
             "uuid": self.uuid,
+            "rank": self.rank,  # Added rank to dictionary output
             "flaglist": Box.flaglist(self.box_id),
         }

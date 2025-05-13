@@ -228,7 +228,7 @@
         {% end %}
         {% if len(box.hints) != 0 %}
             <input id="hintbanking" value="{{ str(options.banking).lower() }}" type="hidden" />
-            {% for index, hint in enumerate(box.hints) %}
+            {% for hint in sorted(box.hints, key=lambda h: h.rank or 0) %}
                 {% if hint.flag_id %}
                     {% set flaghints.append(hint) %}
                 {% else %}
